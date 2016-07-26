@@ -1,0 +1,13 @@
+extends: airbnb
+parser: "babel-eslint"
+env:
+  browser: true
+  mocha: true
+  es6: true
+  commonjs: true
+  jquery: true
+plugins: [react]
+rules:
+  no-console: 0
+  func-names: 0
+  comma-dangle: [2, never]
