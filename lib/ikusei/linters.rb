@@ -2,6 +2,6 @@ require "ikusei/linters/version"
 
 module Ikusei
   module Linters
-    # Your code goes here...
+    require "ikusei/linters/railtie" if defined?(Rails)
   end
 end
