@@ -1,5 +1,4 @@
-module Ikusei
-  module Linters
-    VERSION = "0.1.0"
-  end
+require "ikusei.rb"
+module Ikusei::Linters
+  VERSION = "0.1.0".freeze
 end

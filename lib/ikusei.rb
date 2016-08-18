@@ -1,0 +1,2 @@
+module Ikusei
+end
