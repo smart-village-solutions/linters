@@ -1,5 +1,7 @@
 # Linters
 
+[![Code Climate](https://codeclimate.com/repos/57d18afa46cfc50aa1000c33/badges/903cfe94e756c25b5e38/gpa.svg)](https://codeclimate.com/repos/57d18afa46cfc50aa1000c33/feed)
+
 This are our configuration files for [scss_lint](https://github.com/brigade/scss-lint), [Rubocop](https://github.com/bbatsov/rubocop) and [ESLint](http://eslint.org/).
 If you want to work on project's together with ikusei, please take the time to set up your environment to use these configuration files.
 
