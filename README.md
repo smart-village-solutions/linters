@@ -17,7 +17,7 @@ scss-lint.yml => .sccs-lint.yml
 Add the gem to your Gemfile
 
 ```
-   gem "ikusei-linters", github: "ikuseiGmbH/linters"
+   gem "ikusei_linters"
 ```
 
 Run the rake task
