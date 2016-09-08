@@ -1,6 +1,6 @@
 # Linters
 
-This are our configuration files for [scss-lint](https://github.com/brigade/scss-lint), [Rubocop](https://github.com/bbatsov/rubocop) and [ESLint](http://eslint.org/).
+This are our configuration files for [scss_lint](https://github.com/brigade/scss-lint), [Rubocop](https://github.com/bbatsov/rubocop) and [ESLint](http://eslint.org/).
 If you want to work on project's together with ikusei, please take the time to set up your environment to use these configuration files.
 
 If you download them, please make sure, to rename them and put a leading . in their names.
@@ -30,4 +30,6 @@ Each linter has a own task, so the following works, too:
 
 ```
    bundle exec rake ikusei:rubocop
+   bundle exec rake ikusei:eslint
+   bundle exec rake ikusei:scss_lint
 ```
