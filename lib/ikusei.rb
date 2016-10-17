@@ -1,3 +1,3 @@
 module Ikusei
-  require "ikusei/linters/railtie" if defined?(Rails)
+  require "ikusei/railtie" if defined?(Rails)
 end
