@@ -1088,6 +1088,7 @@ Metrics/LineLength:
   URISchemes:
     - http
     - https
+  IgnoredPatterns: ["expect"]
 
 Metrics/MethodLength:
   CountComments: false  # count full line comments?
