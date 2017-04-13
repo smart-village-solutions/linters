@@ -5,6 +5,7 @@ env:
   mocha: true
   es6: true
   commonjs: true
+  node: true
   jquery: true
 plugins: [react]
 rules:
@@ -13,3 +14,7 @@ rules:
   comma-dangle: [2, never]
   indent: [2, 2, { 'SwitchCase': 1, 'VariableDeclarator': { "var": 2, "let": 2, "const": 3 } }]
   one-var: [2, "always"]
+  arrow-parens: [2, "always"]
+  no-underscore-dangle: [2, "allowAfterThis": true]
+  "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js"] }]
+  "react/forbid-prop-types": 0
