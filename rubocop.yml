@@ -715,7 +715,7 @@ Style/MultilineMethodCallBraceLayout:
     - same_line
 
 Style/MultilineMethodCallIndentation:
-  EnforcedStyle: aligned
+  EnforcedStyle: indented_relative_to_receiver
   SupportedStyles:
     - aligned
     - indented
