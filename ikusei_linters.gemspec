@@ -27,5 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_dependency "scss_lint", "~> 0.50"
   spec.add_dependency "eslintrb", "~> 2.1"
-  spec.add_dependency "rubocop", "~> 0.42"
+  spec.add_dependency "rubocop", "~> 0.49.0"
 end
