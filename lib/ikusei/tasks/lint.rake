@@ -12,7 +12,7 @@ namespace :ikusei do
     root = File.expand_path(File.join(__FILE__, "../../../.."))
 
     t.pattern = "app/assets/javascripts/**/*.js"
-    t.options = YAML.load(File.read(root + "/eslintrc"))
+    t.options = YAML.load(File.read(root + "/eslintrc.json"))
   end
 
   desc "Run rubocop with ikusei configuration"
