@@ -8,9 +8,9 @@ If you want to work on project's together with ikusei, please take the time to s
 If you download them, please make sure, to rename them and put a leading . in their names.
 
 ```
-eslintrc => .eslintrc
+eslintrc.json => .eslintrc.json
 rubocop.yml => .rubocop.yml
-scss-lint.yml => .sccs-lint.yml
+scss-lint.yml => .scss-lint.yml
 ```
 
 

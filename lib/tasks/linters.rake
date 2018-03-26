@@ -13,8 +13,8 @@ namespace :linters do
 
   desc "Copy eslintrc file to current Application folder"
   task :eslint do
-    source = File.join(File.expand_path(File.dirname(__FILE__)), "..", "..", "eslintrc")
-    target = File.join(Rails.root, ".eslintrc")
+    source = File.join(File.expand_path(File.dirname(__FILE__)), "..", "..", "eslintrc.json")
+    target = File.join(Rails.root, ".eslintrc.json")
     FileUtils.cp source, target
   end
 
