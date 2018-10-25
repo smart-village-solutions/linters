@@ -35,3 +35,7 @@ Each linter has a own task, so the following works, too:
    bundle exec rake ikusei:eslint
    bundle exec rake ikusei:scss_lint
 ```
+
+### Versions
+
+If you need a config for a special RuboCop version, we provide different .rubocop.yml versions per Tag: https://github.com/ikuseiGmbH/linters/tags
