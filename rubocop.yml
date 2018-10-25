@@ -9,6 +9,7 @@
 AllCops:
   # Include common Ruby source files.
   Include:
+    - '**/*.rb'
     - '**/*.arb'
     - '**/*.axlsx'
     - '**/*.builder'
@@ -127,6 +128,76 @@ AllCops:
   # application.  If neither of those files exist, RuboCop will use Rails 5.0
   # as the default.
   TargetRailsVersion: ~
+
+#################### Bundler ###############################
+
+Bundler/DuplicatedGem:
+  Description: 'Checks for duplicate gem entries in Gemfile.'
+  Enabled: true
+  VersionAdded: 0.46
+  Include:
+    - '**/*.gemfile'
+    - '**/Gemfile'
+    - '**/gems.rb'
+
+Bundler/GemComment:
+  Description: 'Add a comment describing each gem.'
+  Enabled: false
+  VersionAdded: 0.59
+  Include:
+    - '**/*.gemfile'
+    - '**/Gemfile'
+    - '**/gems.rb'
+  Whitelist: []
+
+Bundler/InsecureProtocolSource:
+  Description: >-
+                 The source `:gemcutter`, `:rubygems` and `:rubyforge` are deprecated
+                 because HTTP requests are insecure. Please change your source to
+                 'https://rubygems.org' if possible, or 'http://rubygems.org' if not.
+  Enabled: true
+  VersionAdded: 0.50
+  Include:
+    - '**/*.gemfile'
+    - '**/Gemfile'
+    - '**/gems.rb'
+
+Bundler/OrderedGems:
+  Description: >-
+                 Gems within groups in the Gemfile should be alphabetically sorted.
+  Enabled: true
+  VersionAdded: 0.46
+  VersionChanged: 0.47
+  TreatCommentsAsGroupSeparators: true
+  Include:
+    - '**/*.gemfile'
+    - '**/Gemfile'
+    - '**/gems.rb'
+
+#################### Gemspec ###############################
+
+Gemspec/DuplicatedAssignment:
+  Description: 'An attribute assignment method calls should be listed only once in a gemspec.'
+  Enabled: true
+  VersionAdded: 0.52
+  Include:
+    - '**/*.gemspec'
+
+Gemspec/OrderedDependencies:
+  Description: >-
+                 Dependencies in the gemspec should be alphabetically sorted.
+  Enabled: true
+  VersionAdded: 0.51
+  TreatCommentsAsGroupSeparators: true
+  Include:
+    - '**/*.gemspec'
+
+Gemspec/RequiredRubyVersion:
+  Description: 'Checks that `required_ruby_version` of gemspec and `TargetRubyVersion` of .rubocop.yml are equal.'
+  Enabled: true
+  VersionAdded: 0.52
+  Include:
+    - '**/*.gemspec'
 
 #################### Layout ###########################
 
@@ -780,6 +851,234 @@ Naming/VariableNumber:
     - snake_case
     - normalcase
     - non_integer
+
+#################### Performance ###########################
+
+Performance/Caller:
+  Description: >-
+             Use `caller(n..n)` instead of `caller`.
+  Enabled: true
+  VersionAdded: 0.49
+
+Performance/CaseWhenSplat:
+  Description: >-
+                 Reordering `when` conditions with a splat to the end
+                 of the `when` branches can improve performance.
+  Enabled: false
+  AutoCorrect: false
+  SafeAutoCorrect: false
+  VersionAdded: 0.34
+  VersionChanged: 0.59
+
+Performance/Casecmp:
+  Description: >-
+             Use `casecmp` rather than `downcase ==`, `upcase ==`, `== downcase`, or `== upcase`..
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#stringcasecmp-vs-stringdowncase---code'
+  Enabled: true
+  VersionAdded: 0.36
+
+Performance/ChainArrayAllocation:
+  Description: >-
+                  Instead of chaining array methods that allocate new arrays, mutate an
+                  existing array.
+  Reference: 'https://twitter.com/schneems/status/1034123879978029057'
+  Enabled: false
+  VersionAdded: 0.59
+
+Performance/CompareWithBlock:
+  Description: 'Use `sort_by(&:foo)` instead of `sort { |a, b| a.foo <=> b.foo }`.'
+  Enabled: true
+  VersionAdded: 0.46
+
+Performance/Count:
+  Description: >-
+                  Use `count` instead of `select...size`, `reject...size`,
+                  `select...count`, `reject...count`, `select...length`,
+                  and `reject...length`.
+  # This cop has known compatibility issues with `ActiveRecord` and other
+  # frameworks. ActiveRecord's `count` ignores the block that is passed to it.
+  # For more information, see the documentation in the cop itself.
+  # If you understand the known risk, you can disable `SafeMode`.
+  SafeMode: true
+  Enabled: true
+  VersionAdded: 0.31
+  VersionChanged: 0.39
+
+Performance/Detect:
+  Description: >-
+                  Use `detect` instead of `select.first`, `find_all.first`,
+                  `select.last`, and `find_all.last`.
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#enumerabledetect-vs-enumerableselectfirst-code'
+  # This cop has known compatibility issues with `ActiveRecord` and other
+  # frameworks. `ActiveRecord` does not implement a `detect` method and `find`
+  # has its own meaning. Correcting `ActiveRecord` methods with this cop
+  # should be considered unsafe.
+  SafeMode: true
+  Enabled: true
+  VersionAdded: 0.30
+  VersionChanged: 0.39
+
+Performance/DoubleStartEndWith:
+  Description: >-
+                  Use `str.{start,end}_with?(x, ..., y, ...)`
+                  instead of `str.{start,end}_with?(x, ...) || str.{start,end}_with?(y, ...)`.
+  Enabled: true
+  VersionAdded: 0.36
+  VersionChanged: 0.48
+  # Used to check for `starts_with?` and `ends_with?`.
+  # These methods are defined by `ActiveSupport`.
+  IncludeActiveSupportAliases: false
+
+Performance/EndWith:
+  Description: 'Use `end_with?` instead of a regex match anchored to the end of a string.'
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#stringmatch-vs-stringstart_withstringend_with-code-start-code-end'
+  # This will change to a new method call which isn't guaranteed to be on the
+  # object. Switching these methods has to be done with knowledge of the types
+  # of the variables which rubocop doesn't have.
+  SafeAutoCorrect: false
+  AutoCorrect: false
+  Enabled: true
+  VersionAdded: 0.36
+  VersionChanged: 0.44
+
+Performance/FixedSize:
+  Description: 'Do not compute the size of statically sized objects except in constants'
+  Enabled: true
+  VersionAdded: 0.35
+
+Performance/FlatMap:
+  Description: >-
+                  Use `Enumerable#flat_map`
+                  instead of `Enumerable#map...Array#flatten(1)`
+                  or `Enumberable#collect..Array#flatten(1)`
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#enumerablemaparrayflatten-vs-enumerableflat_map-code'
+  Enabled: true
+  VersionAdded: 0.30
+  EnabledForFlattenWithoutParams: false
+  # If enabled, this cop will warn about usages of
+  # `flatten` being called without any parameters.
+  # This can be dangerous since `flat_map` will only flatten 1 level, and
+  # `flatten` without any parameters can flatten multiple levels.
+
+Performance/InefficientHashSearch:
+  Description: 'Use `key?` or `value?` instead of `keys.include?` or `values.include?`'
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#hashkey-instead-of-hashkeysinclude-code'
+  Enabled: true
+  VersionAdded: 0.56
+  Safe: false
+
+Performance/LstripRstrip:
+  Description: 'Use `strip` instead of `lstrip.rstrip`.'
+  Enabled: true
+  VersionAdded: 0.36
+
+Performance/RangeInclude:
+  Description: 'Use `Range#cover?` instead of `Range#include?`.'
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#cover-vs-include-code'
+  Enabled: true
+  VersionAdded: 0.36
+
+Performance/RedundantBlockCall:
+  Description: 'Use `yield` instead of `block.call`.'
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#proccall-and-block-arguments-vs-yieldcode'
+  Enabled: true
+  VersionAdded: 0.36
+
+Performance/RedundantMatch:
+  Description: >-
+                  Use `=~` instead of `String#match` or `Regexp#match` in a context where the
+                  returned `MatchData` is not needed.
+  Enabled: true
+  VersionAdded: 0.36
+
+Performance/RedundantMerge:
+  Description: 'Use Hash#[]=, rather than Hash#merge! with a single key-value pair.'
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#hashmerge-vs-hash-code'
+  Enabled: true
+  VersionAdded: 0.36
+  # Max number of key-value pairs to consider an offense
+  MaxKeyValuePairs: 2
+
+Performance/RedundantSortBy:
+  Description: 'Use `sort` instead of `sort_by { |x| x }`.'
+  Enabled: true
+  VersionAdded: 0.36
+
+Performance/RegexpMatch:
+  Description: >-
+                  Use `match?` instead of `Regexp#match`, `String#match`, `Symbol#match`,
+                  `Regexp#===`, or `=~` when `MatchData` is not used.
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#regexp-vs-stringmatch-vs-string-vs-stringmatch-code-'
+  Enabled: true
+  VersionAdded: 0.47
+
+Performance/ReverseEach:
+  Description: 'Use `reverse_each` instead of `reverse.each`.'
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#enumerablereverseeach-vs-enumerablereverse_each-code'
+  Enabled: true
+  VersionAdded: 0.30
+
+Performance/Sample:
+  Description: >-
+                  Use `sample` instead of `shuffle.first`,
+                  `shuffle.last`, and `shuffle[Integer]`.
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#arrayshufflefirst-vs-arraysample-code'
+  Enabled: true
+  VersionAdded: 0.30
+
+Performance/Size:
+  Description: >-
+                  Use `size` instead of `count` for counting
+                  the number of elements in `Array` and `Hash`.
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#arraylength-vs-arraysize-vs-arraycount-code'
+  Enabled: true
+  VersionAdded: 0.30
+
+Performance/StartWith:
+  Description: 'Use `start_with?` instead of a regex match anchored to the beginning of a string.'
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#stringmatch-vs-stringstart_withstringend_with-code-start-code-end'
+  # This will change to a new method call which isn't guaranteed to be on the
+  # object. Switching these methods has to be done with knowledge of the types
+  # of the variables which rubocop doesn't have.
+  SafeAutoCorrect: false
+  AutoCorrect: false
+  Enabled: true
+  VersionAdded: 0.36
+  VersionChanged: 0.44
+
+Performance/StringReplacement:
+  Description: >-
+                  Use `tr` instead of `gsub` when you are replacing the same
+                  number of characters. Use `delete` instead of `gsub` when
+                  you are deleting characters.
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#stringgsub-vs-stringtr-code'
+  Enabled: true
+  VersionAdded: 0.33
+
+Performance/TimesMap:
+  Description: 'Checks for .times.map calls.'
+  AutoCorrect: false
+  Enabled: true
+  VersionAdded: 0.36
+  VersionChanged: 0.50
+  SafeAutoCorrect: false # see https://github.com/rubocop-hq/rubocop/issues/4658
+
+Performance/UnfreezeString:
+  Description: 'Use unary plus to get an unfrozen string literal.'
+  Enabled: true
+  VersionAdded: 0.50
+
+Performance/UnneededSort:
+  Description: >-
+                  Use `min` instead of `sort.first`,
+                  `max_by` instead of `sort_by...last`, etc.
+  Enabled: true
+  VersionAdded: 0.55
+
+Performance/UriDefaultParser:
+  Description: 'Use `URI::DEFAULT_PARSER` instead of `URI::Parser.new`.'
+  Enabled: true
+  VersionAdded: 0.50
 
 #################### Style ###########################
 
@@ -1495,6 +1794,13 @@ Style/YodaCondition:
     # check only equality operators: `!=` and `==`
     - equality_operators_only
 
+Style/ZeroLengthPredicate:
+  Description: 'Use #empty? when testing for objects of length 0.'
+  Enabled: true
+  Safe: false
+  VersionAdded: 0.37
+  VersionChanged: 0.39
+
 #################### Metrics ###############################
 
 Metrics/AbcSize:
@@ -1597,17 +1903,6 @@ Lint/UnusedMethodArgument:
 
 Lint/Void:
   CheckForMethodsWithNoSideEffects: false
-
-#################### Performance ###########################
-
-Performance/DoubleStartEndWith:
-  # Used to check for `starts_with?` and `ends_with?`.
-  # These methods are defined by `ActiveSupport`.
-  IncludeActiveSupportAliases: false
-
-Performance/RedundantMerge:
-  # Max number of key-value pairs to consider an offense
-  MaxKeyValuePairs: 2
 
 #################### Rails #################################
 
@@ -1761,8 +2056,45 @@ Rails/Validation:
   Include:
     - app/models/**/*.rb
 
-Bundler/OrderedGems:
-  TreatCommentsAsGroupSeparators: true
+#################### Security ##############################
 
-Gemspec/OrderedDependencies:
-  TreatCommentsAsGroupSeparators: true
+Security/Eval:
+  Description: 'The use of eval represents a serious security risk.'
+  Enabled: true
+  VersionAdded: 0.47
+
+Security/JSONLoad:
+  Description: >-
+                 Prefer usage of `JSON.parse` over `JSON.load` due to potential
+                 security issues. See reference for more information.
+  Reference: 'http://ruby-doc.org/stdlib-2.3.0/libdoc/json/rdoc/JSON.html#method-i-load'
+  Enabled: true
+  VersionAdded: 0.43
+  VersionChanged: 0.44
+  # Autocorrect here will change to a method that may cause crashes depending
+  # on the value of the argument.
+  AutoCorrect: false
+  SafeAutoCorrect: false
+
+Security/MarshalLoad:
+  Description: >-
+                 Avoid using of `Marshal.load` or `Marshal.restore` due to potential
+                 security issues. See reference for more information.
+  Reference: 'http://ruby-doc.org/core-2.3.3/Marshal.html#module-Marshal-label-Security+considerations'
+  Enabled: true
+  VersionAdded: 0.47
+
+Security/Open:
+  Description: 'The use of Kernel#open represents a serious security risk.'
+  Enabled: true
+  VersionAdded: 0.53
+  Safe: false
+
+Security/YAMLLoad:
+  Description: >-
+                 Prefer usage of `YAML.safe_load` over `YAML.load` due to potential
+                 security issues. See reference for more information.
+  Reference: 'https://ruby-doc.org/stdlib-2.3.3/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security'
+  Enabled: true
+  VersionAdded: 0.47
+  SafeAutoCorrect: false
