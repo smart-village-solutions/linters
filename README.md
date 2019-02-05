@@ -10,7 +10,7 @@ If you download them, please make sure, to rename them and put a leading . in th
 ```
 eslintrc.json => .eslintrc.json
 rubocop.yml => .rubocop.yml
-scss-lint.yml => .sccs-lint.yml
+scss-lint.yml => .scss-lint.yml
 ```
 
 
@@ -19,21 +19,27 @@ scss-lint.yml => .sccs-lint.yml
 Add the gem to your Gemfile
 
 ```
-   gem "ikusei_linters"
+   gem "linter"
+```
+
+or for a specific version
+
+```
+  gem 'linter', git: "git@github.com:ikuseiGmbH/linters.git", tag: "rubocop-0.53.0"
 ```
 
 Run the rake task
 
 ```
-   bundle exec rake ikusei:lint
+   bundle exec rake linters:install
 ```
 
-Each linter has a own task, so the following works, too:
+Each linter has a own installer, so the following works, too:
 
 ```
-   bundle exec rake ikusei:rubocop
-   bundle exec rake ikusei:eslint
-   bundle exec rake ikusei:scss_lint
+   bundle exec rake linters:rubocop
+   bundle exec rake linters:eslint
+   bundle exec rake linters:scss_lint
 ```
 
 ### Versions
