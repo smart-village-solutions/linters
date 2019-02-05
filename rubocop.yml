@@ -6,6 +6,9 @@
 #   - disabled.yml
 
 # Common configuration.
+
+require: rubocop-rspec
+
 AllCops:
   # Include common Ruby source files.
   Include:
