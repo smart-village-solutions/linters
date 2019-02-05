@@ -25,7 +25,7 @@ Add the gem to your Gemfile
 or for a specific version
 
 ```
-  gem 'linter', git: "git@github.com:ikuseiGmbH/linters.git", tag: "rubocop-0.53.0"
+  gem 'linter', git: "git@github.com:ikuseiGmbH/linters.git", tag: "rubocop-0.63.0"
 ```
 
 Run the rake task
