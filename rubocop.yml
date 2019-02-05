@@ -6,6 +6,9 @@
 #   - disabled.yml
 
 # Common configuration.
+
+require: rubocop-rspec
+
 AllCops:
   # Include common Ruby source files.
   Include:
@@ -1787,12 +1790,16 @@ Style/WordArray:
   WordRegex: !ruby/regexp '/\A[\p{Word}\n\t]+\z/'
 
 Style/YodaCondition:
-  EnforcedStyle: all_comparison_operators
+  EnforcedStyle: require_for_all_comparison_operators
   SupportedStyles:
     # check all comparison operators
-    - all_comparison_operators
+    - require_for_all_comparison_operators
     # check only equality operators: `!=` and `==`
-    - equality_operators_only
+    - require_for_equality_operators_only
+    #
+    - forbid_for_all_comparison_operators
+    #
+    - forbid_for_equality_operators_only,
 
 Style/ZeroLengthPredicate:
   Description: 'Use #empty? when testing for objects of length 0.'
